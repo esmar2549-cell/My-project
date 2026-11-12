@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Try Quiz | StudyMate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Lexend:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="wrap">
+        <a class="logo" href="index.html">StudyMate</a>
+        <span class="me hide" id="me"></span
+        ><a class="btn b" href="index.html">Home</a
+        ><button class="btn g hide" id="res">See your result</button>
+      </div>
+    </nav>
+    <main>
+      <section>
+        <div class="wrap"><div class="qbox" id="box"></div></div>
+      </section>
+    </main>
+    <footer>
+      <div class="wrap">
+        <div class="card">
+          <div class="who">
+            <div class="ph">
+              <span>JW</span
+              ><img
+                src="profil.png"
+                alt="Photo of Joss Wayar Sangngern"
+                onerror="this.remove()"
+              />
+            </div>
+            <b>Esmar<br />Sateng</b><i>Creator of StudyMate</i>
+          </div>
+          <div class="info">
+            <div class="grad">
+              <div class="it">
+                <div class="ic">📚</div>
+                <div><small>Course</small><span>Translating</span></div>
+              </div>
+              <div class="it">
+                <div class="ic">🆔</div>
+                <div><small>Student ID</small><span>23030250100</span></div>
+              </div>
+              <div class="it">
+                <div class="ic">👤</div>
+                <div><small>Made by</small><span>Esmar Sateng</span></div>
+              </div>
+              <div class="it">
+                <div class="ic">🎓</div>
+                <div>
+                  <small>Material source</small
+                  ><span>Library, University of Staffordshire</span>
+                </div>
+              </div>
+            </div>
+            <p class="note">
+              Hopefully, this website will continue to grow and become a helpful
+              space that makes learning English easier, more enjoyable, and
+              accessible for everyone. Created by Esmar Sateng (23030250100).
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="questions.js"></script>
+    <script>
+      const box = document.getElementById("box"),
+        N = 10,
+        K = "studymate_v1";
+      const res = document.getElementById("res"),
+        me = document.getElementById("me");
+      let DB = { cur: null, users: {} },
+        set,
+        ids,
+        ans,
+        i,
+        right,
+        done;
+      try {
+        DB = JSON.parse(localStorage.getItem(K)) || DB;
+      } catch (e) {}
+      const save = () => {
+        try {
+          localStorage.setItem(K, JSON.stringify(DB));
+        } catch (e) {}
+      };
+      const U = () => DB.cur && DB.users[DB.cur];
+      const shuffle = (a) => {
+        a = [...a];
+        for (let j = a.length - 1; j > 0; j--) {
+          const k = Math.floor(Math.random() * (j + 1));
+          [a[j], a[k]] = [a[k], a[j]];
+        }
+        return a;
+      };
+      const dt = (t) =>
+        new Date(t).toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "short",
+        });
+      const nav = (p) => {
+        res.classList.toggle("hide", !p);
+        const u = U();
+        me.classList.toggle("hide", !u);
+        if (u) me.textContent = "Hi, " + u.name;
+      };
+      function home() {
+        nav(false);
+        const u = U();
+        if (!u) {
+          box.innerHTML =
+            '<h2>Who is playing?</h2><p class="lead">Type your name so StudyMate can save your scores and progress in this browser.</p><div class="field"><input id="nm" maxlength="20" placeholder="Your name" autocomplete="off"><button class="btn" id="ok">Save and continue</button></div><p class="hint" id="hint"></p>';
+          const nm = document.getElementById("nm"),
+            go = () => {
+              const n = nm.value.trim().replace(/\s+/g, " ");
+              if (!n) {
+                document.getElementById("hint").textContent =
+                  "Please type your name first.";
+                return;
+              }
+              const k = n.toLowerCase();
+              if (!DB.users[k])
+                DB.users[k] = { name: n, attempts: [], run: null };
+              DB.cur = k;
+              save();
+              home();
+            };
+          document.getElementById("ok").onclick = go;
+          nm.onkeydown = (e) => {
+            if (e.key == "Enter") go();
+          };
+          nm.focus();
+          return;
+        }
+        const at = u.attempts,
+          best = at.length ? Math.max(...at.map((a) => a.score)) : "-",
+          avg = at.length
+            ? Math.round(at.reduce((n, a) => n + a.score, 0) / at.length)
+            : "-";
+        const run =
+          u.run &&
+          u.run.ids.length == u.run.ans.length &&
+          u.run.ids.every((x) => QUESTIONS[x])
+            ? u.run
+            : null;
+        if (!run && u.run) {
+          u.run = null;
+          save();
+        }
+        const got = run ? run.ans.filter((x) => x >= 0).length : 0;
+        box.innerHTML =
+          '<h2>Hi, <span id="n"></span>!</h2><p class="lead">10 random questions about linking words. Every answer is worth 10 points. Your score is out of 100.</p>' +
+          '<div class="stats"><div class="stat"><b>' +
+          best +
+          '</b><small>Best score</small></div><div class="stat"><b>' +
+          at.length +
+          '</b><small>Rounds played</small></div><div class="stat"><b>' +
+          avg +
+          "</b><small>Average</small></div></div>" +
+          (run
+            ? '<p class="unf">Unfinished round: ' +
+              got +
+              " of " +
+              run.ids.length +
+              ' answered.</p><button class="btn" id="rs">Resume round</button> <button class="btn w" id="go">Start new round</button>'
+            : '<button class="btn" id="go">Start round</button>') +
+          (at.length
+            ? '<ul class="hist">' +
+              at
+                .slice(-5)
+                .reverse()
+                .map(
+                  (a, k) =>
+                    "<li><span>Round " +
+                    (at.length - k) +
+                    "</span><b>" +
+                    a.score +
+                    "/100</b><small>" +
+                    dt(a.t) +
+                    "</small></li>",
+                )
+                .join("") +
+              "</ul>"
+            : "") +
+          '<p class="links"><button class="lk" id="sw">Not you? Switch user</button><button class="lk" id="rm">Reset my progress</button></p>';
+        document.getElementById("n").textContent = u.name;
+        document.getElementById("go").onclick = () => {
+          const x = shuffle(QUESTIONS.map((_, k) => k)).slice(0, N);
+          u.run = { ids: x, ans: x.map(() => -1) };
+          save();
+          begin(u.run);
+        };
+        if (run) document.getElementById("rs").onclick = () => begin(run);
+        document.getElementById("sw").onclick = () => {
+          DB.cur = null;
+          save();
+          home();
+        };
+        document.getElementById("rm").onclick = async () => {
+          if (
+            await dlg(
+              "Reset progress?",
+              "This deletes all saved scores for " +
+                u.name +
+                ". You cannot undo it.",
+              "Yes, delete",
+              "Cancel",
+              true,
+            )
+          ) {
+            delete DB.users[DB.cur];
+            DB.cur = null;
+            save();
+            home();
+          }
+        };
+      }
+      function begin(r) {
+        ids = r.ids;
+        ans = r.ans;
+        set = ids.map((x) => QUESTIONS[x]);
+        right = 0;
+        done = 0;
+        ans.forEach((a, k) => {
+          if (a >= 0) {
+            done++;
+            if (a == set[k].a) right++;
+          }
+        });
+        i = ans.indexOf(-1);
+        if (i < 0) {
+          end();
+          return;
+        }
+        nav(true);
+        ask();
+      }
+      function ask() {
+        const q = set[i];
+        box.innerHTML =
+          '<div class="bar"><i style="width:' +
+          (i / set.length) * 100 +
+          '%"></i></div><p><small>Question ' +
+          (i + 1) +
+          " of " +
+          set.length +
+          '</small></p><p class="q"></p><div id="os"></div><p class="fb" aria-live="polite"></p><button class="btn hide" id="nx">Next</button>';
+        box.querySelector(".q").textContent = q.q;
+        const os = document.getElementById("os");
+        q.o.forEach((t, n) => {
+          const b = document.createElement("button");
+          b.className = "opt";
+          b.textContent = String.fromCharCode(65 + n) + ". " + t;
+          b.onclick = () => pick(n);
+          os.append(b);
+        });
+      }
+      function pick(n) {
+        const q = set[i],
+          bs = [...document.querySelectorAll(".opt")];
+        bs.forEach((b, k) => {
+          b.disabled = true;
+          if (k == q.a) b.classList.add("ok");
+        });
+        done++;
+        ans[i] = n;
+        if (n == q.a) right++;
+        else bs[n].classList.add("no");
+        save();
+        box.querySelector(".fb").textContent =
+          (n == q.a ? "Correct! " : "Not quite. ") + (q.e || "");
+        const nx = document.getElementById("nx");
+        nx.classList.remove("hide");
+        nx.textContent = i == set.length - 1 ? "See my score" : "Next";
+        nx.focus();
+        nx.onclick = () => {
+          i++;
+          i < set.length ? ask() : end();
+        };
+      }
+      function end() {
+        nav(false);
+        const u = U(),
+          s = Math.round((right * 100) / set.length),
+          prev = u.attempts.length
+            ? Math.max(...u.attempts.map((a) => a.score))
+            : -1;
+        u.attempts.push({
+          score: s,
+          right: right,
+          total: set.length,
+          t: Date.now(),
+        });
+        u.run = null;
+        save();
+        const m =
+          s >= 80
+            ? "Amazing! You are a linking pro."
+            : s >= 50
+              ? "Nice work. One more round and you will nail it."
+              : "Good start. Review the lesson and try again.";
+        const tag =
+          u.attempts.length == 1
+            ? "First round saved!"
+            : s > prev
+              ? "New personal best!"
+              : "Your best is " + prev + "/100.";
+        resHTML =
+          '<p class="center"><b>Your score</b></p><p class="score">' +
+          s +
+          '<small>/100</small></p><p class="center" style="margin:16px 0 8px">' +
+          right +
+          " of " +
+          set.length +
+          " correct. " +
+          m +
+          '</p><p class="center" style="margin-bottom:24px"><b>' +
+          tag +
+          '</b> Saved to your progress.</p><div class="center"><button class="btn" id="re">Try again</button> <button class="btn b" id="rv"' +
+          (done == set.length
+            ? ""
+            : ' disabled title="Answer all questions to unlock"') +
+          '>Review answers</button> <a class="btn w" href="index.html#learn">Review lesson</a></div>' +
+          (done == set.length
+            ? ""
+            : '<p class="hint center" style="margin-top:14px">Answer all ' +
+              set.length +
+              " questions to unlock Review answers. You answered " +
+              done +
+              ".</p>");
+        showRes();
+      }
+      let resHTML = "";
+      const esc = (t) =>
+        String(t).replace(
+          /[&<>"]/g,
+          (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c],
+        );
+      const L = (q, n) => String.fromCharCode(65 + n) + ". " + q.o[n];
+      function showRes() {
+        box.innerHTML = resHTML;
+        document.getElementById("re").onclick = home;
+        document.getElementById("rv").onclick = review;
+      }
+      function review() {
+        if (done < set.length) return;
+        box.innerHTML =
+          '<h2>Your answers</h2><p class="lead">Green means correct, pink means wrong. Read each explanation so you remember it next time.</p>' +
+          set
+            .map((q, k) => {
+              const a = ans[k],
+                st = a < 0 ? "skip" : a == q.a ? "ok" : "no";
+              return (
+                '<div class="rv ' +
+                st +
+                '"><p class="rq">' +
+                (k + 1) +
+                ". " +
+                esc(q.q) +
+                "</p>" +
+                (st == "ok"
+                  ? "<p>&#10004; Your answer: <b>" + esc(L(q, a)) + "</b></p>"
+                  : st == "no"
+                    ? "<p>&#10008; Your answer: <b>" +
+                      esc(L(q, a)) +
+                      "</b></p><p>&#10004; Correct answer: <b>" +
+                      esc(L(q, q.a)) +
+                      "</b></p>"
+                    : "<p>&ndash; Not answered</p><p>&#10004; Correct answer: <b>" +
+                      esc(L(q, q.a)) +
+                      "</b></p>") +
+                (q.e ? '<p class="ex">' + esc(q.e) + "</p>" : "") +
+                "</div>"
+              );
+            })
+            .join("") +
+          '<div class="center" style="margin-top:20px"><button class="btn b" id="bk">Back to score</button> <button class="btn" id="re">Try again</button></div>';
+        document.getElementById("bk").onclick = showRes;
+        document.getElementById("re").onclick = home;
+        window.scrollTo(0, 0);
+      }
+
+      function dlg(title, msg, okTxt, noTxt, focusNo) {
+        return new Promise((res) => {
+          const prev = document.activeElement,
+            ov = document.createElement("div");
+          ov.className = "ov";
+          ov.innerHTML =
+            '<div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dt"><h3 id="dt"></h3><p></p><div class="row"><button class="btn w" id="dn"></button><button class="btn" id="dy"></button></div></div>';
+          ov.querySelector("h3").textContent = title;
+          ov.querySelector("p").textContent = msg;
+          const y = ov.querySelector("#dy"),
+            n = ov.querySelector("#dn");
+          y.textContent = okTxt;
+          n.textContent = noTxt;
+          const close = (v) => {
+            document.removeEventListener("keydown", key);
+            ov.remove();
+            if (prev && prev.focus) prev.focus();
+            res(v);
+          };
+          const key = (e) => {
+            if (e.key == "Escape") close(false);
+            if (e.key == "Tab") {
+              e.preventDefault();
+              (document.activeElement == y ? n : y).focus();
+            }
+          };
+          y.onclick = () => close(true);
+          n.onclick = () => close(false);
+          ov.onclick = (e) => {
+            if (e.target == ov) close(false);
+          };
+          document.addEventListener("keydown", key);
+          document.body.append(ov);
+          (focusNo ? n : y).focus();
+        });
+      }
+      res.onclick = async () => {
+        const left = set.length - done;
+        if (
+          left > 0 &&
+          !(await dlg(
+            "Hold on!",
+            "You still have " +
+              left +
+              " unanswered question" +
+              (left > 1 ? "s" : "") +
+              ". They will count as wrong. See your result anyway?",
+            "See my result",
+            "Keep going",
+          ))
+        )
+          return;
+        end();
+      };
+      home();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>StudyMate | Learn linking words, the playful way</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Lexend:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="wrap">
+        <a class="logo" href="index.html">StudyMate</a>
+        <a class="btn b nl" href="#learn">Linking words</a
+        ><a class="btn pk nl" href="#concise">Be concise</a>
+        <a class="btn g" href="quiz.html">Try Quiz</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="wrap">
+        <div>
+          <h1>
+            <span class="o">Link</span><span class="y">your ideas.</span
+            ><span class="p">Win the essay.</span>
+          </h1>
+          <p class="sub">
+            Bite-size academic writing lessons for university students.
+          </p>
+          <a class="btn" href="#learn">Start learning</a
+          ><a class="btn w" href="quiz.html">Try Quiz</a>
+        </div>
+        <div class="demo" aria-live="polite">
+          <small>Quick try: pick the best word</small>
+          <p class="sent">
+            <span id="pre"></span><span class="gap" id="gap"></span
+            ><span id="post"></span>
+          </p>
+          <div class="opts" id="opts"></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="band">
+      <div class="wrap two">
+        <div>
+          <h2>Why linking words matter</h2>
+          <p class="lead">
+            Assignments are written in formal language. Linking (transition)
+            words join ideas, sentences and paragraphs, and show the direction,
+            order and flow of your argument. They make your work stronger and
+            easier to follow.
+          </p>
+          <p class="lead">
+            <b>Tip:</b> when a transition starts a sentence, follow it with a
+            comma. Between two main ideas, use a semi-colon or full stop.
+          </p>
+        </div>
+        <div class="panel ba">
+          <p class="tip">See the difference</p>
+          <div class="seg" role="tablist">
+            <button class="tab" role="tab" aria-selected="true" data-v="0">
+              Without links</button
+            ><button class="tab" role="tab" aria-selected="false" data-v="1">
+              With links
+            </button>
+          </div>
+          <p id="bat"></p>
+          <small id="bac"></small>
+        </div>
+      </div>
+    </div>
+
+    <section id="learn">
+      <div class="wrap">
+        <h2>Pick a job, <span class="o1">get the words</span></h2>
+        <p class="lead">
+          Choose what you want your sentence to do. Tap a tab to see the words
+          that do it.
+        </p>
+        <div class="tabs" role="tablist" id="tabs"></div>
+        <div class="panel" id="panel" role="tabpanel"></div>
+      </div>
+    </section>
+
+    <div class="band">
+      <div class="wrap">
+        <h2>Linking inside a sentence</h2>
+        <p class="lead">
+          Words that link ideas within one sentence are called coordinating
+          conjunctions. Don't worry about the term. Think about the function.
+        </p>
+        <div class="cols" id="conj"></div>
+      </div>
+    </div>
+
+    <section id="concise">
+      <div class="wrap">
+        <h2>Less is <span class="g1">more</span></h2>
+        <p class="lead">
+          Cutting your word count? Replace wordy phrases with one word that
+          means the same. Tap a card to see the swap.
+        </p>
+        <p class="saved">Words saved: <b id="saved">0</b></p>
+        <div class="flips" id="flips"></div>
+      </div>
+    </section>
+
+    <section class="band cta">
+      <div class="wrap">
+        <h2>Ready to test yourself?</h2>
+        <p class="lead" style="margin-inline: auto">
+          Each round has 10 questions. Score out of 100 and try again as many
+          times as you like.
+        </p>
+        <a class="btn" href="quiz.html">Try Quiz</a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <div class="card">
+          <div class="who">
+            <div class="ph">
+              <span>JW</span
+              ><img
+                src="profil.png"
+                alt="Photo of Joss Wayar Sangngern"
+                onerror="this.remove()"
+              />
+            </div>
+            <b>Esmar<br />Sateng</b><i>Creator of StudyMate</i>
+          </div>
+          <div class="info">
+            <div class="grad">
+              <div class="it">
+                <div class="ic">📚</div>
+                <div><small>Course</small><span>Translating</span></div>
+              </div>
+              <div class="it">
+                <div class="ic">🆔</div>
+                <div><small>Student ID</small><span>23030250100</span></div>
+              </div>
+              <div class="it">
+                <div class="ic">👤</div>
+                <div><small>Made by</small><span>Esmar Sateng</span></div>
+              </div>
+              <div class="it">
+                <div class="ic">🎓</div>
+                <div>
+                  <small>Material source</small
+                  ><span>Library, University of Staffordshire</span>
+                </div>
+              </div>
+            </div>
+            <p class="note">
+              Hopefully, this website will continue to grow and become a helpful
+              space that makes learning English easier, more enjoyable, and
+              accessible for everyone. Created by Esmar Sateng (23030250100).
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const T = {
+        "Add an idea": [
+          "additionally",
+          "also",
+          "moreover",
+          "furthermore",
+          "again",
+          "further",
+          "then",
+          "besides",
+          "too",
+          "similarly",
+          "correspondingly",
+          "indeed",
+          "regarding",
+        ],
+        "Show an alternative": [
+          "whereas",
+          "conversely",
+          "in comparison",
+          "by contrast",
+          "another view is…",
+          "alternatively",
+          "although",
+          "otherwise",
+          "instead",
+        ],
+        "Explain results": [
+          "therefore",
+          "accordingly",
+          "as a result of",
+          "consequently",
+          "it can be seen",
+          "evidence illustrates that",
+          "because of this",
+          "thus",
+          "hence",
+          "for this reason",
+          "owing to x",
+          "this suggests that",
+          "it follows that",
+          "that implies",
+        ],
+        "Give a cause": ["as a result of", "because (mid-sentence only)"],
+        Compare: ["compared with", "in the same way", "likewise"],
+        Contrast: [
+          "by contrast",
+          "although",
+          "compared with",
+          "conversely",
+          "despite",
+          "however",
+          "nevertheless",
+          "yet",
+        ],
+        "Show an effect": ["as a result", "therefore", "thus"],
+        "Stress a point": [
+          "however",
+          "nonetheless",
+          "furthermore",
+          "in the final analysis",
+          "despite x",
+          "notwithstanding x",
+          "in spite of x",
+          "although",
+          "though",
+          "after all",
+          "at the same time",
+          "even if x is true",
+        ],
+        "Give examples": [
+          "for example",
+          "for instance",
+          "namely",
+          "such as",
+          "as follows",
+          "as exemplified by",
+          "including",
+          "especially",
+          "particularly",
+          "in particular",
+          "notably",
+          "mainly",
+        ],
+        Rephrase: [
+          "in other terms",
+          "rather",
+          "or",
+          "better",
+          "in view of this",
+          "in contrast",
+        ],
+        "Put in order": [
+          "firstly",
+          "secondly",
+          "thirdly",
+          "another",
+          "additionally",
+          "finally",
+          "moreover",
+          "also",
+          "subsequently",
+          "eventually",
+          "next",
+          "then",
+        ],
+        "Sum up": [
+          "in conclusion",
+          "therefore",
+          "to conclude",
+          "on the whole",
+          "hence",
+          "thus",
+          "to summarise",
+          "altogether",
+          "overall",
+        ],
+      };
+      const tabs = document.getElementById("tabs"),
+        panel = document.getElementById("panel");
+      function show(k) {
+        [...tabs.children].forEach((b) =>
+          b.setAttribute("aria-selected", b.textContent == k),
+        );
+        panel.innerHTML =
+          '<p class="tip">Use these to: ' +
+          k.toLowerCase() +
+          '</p><div class="words">' +
+          T[k].map((w) => "<span>" + w + "</span>").join("") +
+          "</div>";
+      }
+      Object.keys(T).forEach((k) => {
+        const b = document.createElement("button");
+        b.className = "tab";
+        b.role = "tab";
+        b.textContent = k;
+        b.onclick = () => show(k);
+        tabs.append(b);
+      });
+      show("Add an idea");
+      const C = [
+        ["for", "connects a reason to a result"],
+        ["and", "connects equal and similar ideas"],
+        ["nor", "connects two negative ideas"],
+        ["but", "connects equal but different ideas"],
+        ["or", "connects two equal choices"],
+        ["yet", "connects equal and contrasting ideas"],
+        ["so", "connects a result to a reason"],
+      ];
+      document.getElementById("conj").innerHTML = C.map(
+        (c) =>
+          '<div class="conj"><b>' +
+          c[0] +
+          "</b><small>" +
+          c[1] +
+          "</small></div>",
+      ).join("");
+      const F = [
+        ["employed the use of", "used"],
+        ["basic fundamentals", "fundamentals"],
+        ["alternative choices", "alternatives"],
+        ["in as few words as possible", "concisely"],
+        ["look into", "investigate"],
+        ["put on", "gained"],
+        ["turned down", "rejected"],
+        ["got better", "improved"],
+        ["hit and miss", "erratic"],
+        ["in spite of", "although"],
+      ];
+      const fl = document.getElementById("flips"),
+        sv = document.getElementById("saved"),
+        wc = (s) => s.trim().split(/\s+/).length;
+      F.forEach((f) => {
+        const b = document.createElement("button");
+        b.className = "flip";
+        b.innerHTML = "<em>Instead of</em>" + f[0];
+        b.onclick = () => {
+          const on = b.classList.toggle("on");
+          b.innerHTML = on
+            ? "<em>Use</em>" + f[1]
+            : "<em>Instead of</em>" + f[0];
+          sv.textContent = [...fl.children].reduce(
+            (n, x, k) =>
+              n + (x.classList.contains("on") ? wc(F[k][0]) - wc(F[k][1]) : 0),
+            0,
+          );
+        };
+        fl.append(b);
+      });
+      const BA = [
+        [
+          "Many students skip planning. Their essays feel disconnected. Examiners struggle to follow the argument. Marks are lost.",
+          "Four short, separate statements. The reader has to guess how they relate.",
+        ],
+        [
+          "Many students skip planning. <mark>As a result</mark>, their essays feel disconnected. <mark>Consequently</mark>, examiners struggle to follow the argument. <mark>Moreover</mark>, marks are lost.",
+          "Now the links show cause, effect and an extra point.",
+        ],
+      ];
+      const bat = document.getElementById("bat"),
+        bac = document.getElementById("bac"),
+        bt = document.querySelectorAll(".seg .tab");
+      const ba = (v) => {
+        bat.innerHTML = BA[v][0];
+        bac.textContent = BA[v][1];
+        bt.forEach((b) => b.setAttribute("aria-selected", b.dataset.v == v));
+      };
+      bt.forEach((b) => (b.onclick = () => ba(b.dataset.v)));
+      ba(0);
+      const DQ = [
+        [
+          "The first plan failed. ",
+          ", the team chose a new one.",
+          ["Therefore", "However", "For example"],
+        ],
+        [
+          "The test was difficult. ",
+          ", most students passed.",
+          ["However", "Therefore", "Moreover"],
+        ],
+        [
+          "Many sources agree, ",
+          " Smith (2020) and Jones (2021).",
+          ["including", "however", "thus"],
+        ],
+        [
+          "She studied every night. ",
+          ", she earned a distinction.",
+          ["As a result", "By contrast", "In conclusion"],
+        ],
+        [
+          "Plants need sunlight. ",
+          ", fungi can grow in the dark.",
+          ["By contrast", "Likewise", "Therefore"],
+        ],
+        [
+          "First, plan your essay. ",
+          ", write a draft.",
+          ["Next", "However", "Overall"],
+        ],
+        [
+          "The data were clear; ",
+          ", the sample was small.",
+          ["however", "for example", "firstly"],
+        ],
+        [
+          "Cycling is healthy. ",
+          ", it is cheap.",
+          ["Moreover", "Instead", "In conclusion"],
+        ],
+        [
+          "We reviewed ten studies and tested two models. ",
+          ", the evidence supports the hypothesis.",
+          ["In conclusion", "For instance", "Whereas"],
+        ],
+        [
+          "Several animals hibernate, ",
+          " bears and hedgehogs.",
+          ["such as", "although", "thus"],
+        ],
+      ];
+      let last = -1;
+      try {
+        last = +localStorage.getItem("sm_demo");
+      } catch (e) {}
+      let di;
+      do {
+        di = Math.floor(Math.random() * DQ.length);
+      } while (di == last && DQ.length > 1);
+      try {
+        localStorage.setItem("sm_demo", di);
+      } catch (e) {}
+      const dq = DQ[di],
+        gap = document.getElementById("gap"),
+        opts = document.getElementById("opts");
+      document.getElementById("pre").textContent = dq[0];
+      document.getElementById("post").textContent = dq[1];
+      dq[2]
+        .map((t, n) => [t, n == 0])
+        .sort(() => Math.random() - 0.5)
+        .forEach(([t, ok]) => {
+          const c = document.createElement("button");
+          c.className = "chip";
+          c.textContent = t;
+          c.onclick = () => {
+            gap.textContent = t;
+            opts
+              .querySelectorAll(".chip")
+              .forEach((x) => (x.className = "chip"));
+            c.classList.add(ok ? "ok" : "no");
+          };
+          opts.append(c);
+        });
+    </script>
+  </body>
+</html>

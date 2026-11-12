@@ -1,0 +1,30 @@
+haloo claude, bergeraklah seperti senior web developer yang handal yaa.
+Buatkan aku landing page untuk "StudyMate" untuk mempelajari materi yang nanti aku kasih 
+(website nya harus bisa membantu orang belajar materi tersebut). Kemudian web ini tuh di 
+peruntukan untuk anak kuliahan yang mau belajar bahasa gitu dan otomatis aku harap web nya
+berbahasa inggris ya, untuk vibe nya mau berani, playful, nge edukasi dan gampang buat diinget
+gitu sama user yang pake. Aku bakal kasih referensi nya yaa ambil tipografi, tema tema nya. 
+Buat warna nya juga sudah terlampir di gambar yaa, font nya juga aku mau sesuaikan dan enak di 
+lihat yaa, struktur web nya paling kaya di atas tuh navbar nya di bikin bagus aja terus isinya ya
+kaya web edukasi biasanya sebelumnya ada materi dari sini
+https://libguides.staffs.ac.uk/academic_writing/linking terus ada "Try Quiz" 
+di page lain nah nanti aku juga akan siapkan 100 soal gitu per sesi 10 soal nanti ada skor .../100 
+trs bisa di ulang ulang. Redaksi wajib tertulis di footer, kurang lebih seperti ini:
+Website ini dibuat untuk memenuhi tugas mata kuliah Pemrograman Website. Dibuat oleh
+Joss Wayar Sangngern(JWR831996). Kemudian Wujud akhir: static html (Html, css, javascript).
+
+nah ini kan mau masuk ke vercel aku mau ada logika buat nyimpen sesi gimana?
+biar akun yg udh login tuh kan udh ngerjain quiz kan tadi nah progres nya kesimpen gitu.
+
+boleh pake ini aja
+Opsi 1: localStorage (tanpa akun asli)
+* Pengguna mengisi nama di awal, lalu hasil quiz disimpan di browser mereka.
+* Tetap 100% static HTML, CSS, dan JS, tanpa layanan luar, jadi paling aman untuk syarat tugasmu.
+* Kekurangannya, data hanya ada di browser dan perangkat itu. Kalau ganti HP atau laptop, atau cache dihapus, progres hilang. Ini juga bukan login sungguhan, jadi tidak ada password.
+soalnya tuh aku cuma boleh pake html, css, javascript aja
+
+di bagian pas udh selesai quiz, aku mau di samping try again ada review jawban quiz yg udh di kerjain baru Review Lesson
+
+mau nambahin logika, untuk quiz misal ga ada soal yg di jawab tuh gabisa nge review jadi kalo mau review ya harus jawab 10 soal gitu
+
+kalo ada warning muncul pop up nya di tengah dengan tema dan font yg di sesuaikan dengan web nyaa yaa bukan di atas 
